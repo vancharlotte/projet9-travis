@@ -1,7 +1,12 @@
 version: '2'
 services:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
   myerp.db:
-    image: postgres:13
+    image: postgres:9.4
     ports:
       - "127.0.0.1:9032:5432"
     volumes:
