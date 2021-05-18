@@ -20,6 +20,20 @@ public class EcritureComptableTest {
         return vRetour;
     }
 
+  /*  @Test
+    public void getTotalDebitTest(){
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
+
+        vEcriture.setLibelle("Equilibrée");
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.00", "33"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
+
+        Assert.assertEquals(vEcriture.getTotalDebit(),340.50);
+    }*/
+
     @Test
     public void isEquilibree() {
         EcritureComptable vEcriture;
