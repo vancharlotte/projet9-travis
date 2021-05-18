@@ -3,8 +3,12 @@ package com.dummy.myerp.model.bean.comptabilite;
 import java.math.BigDecimal;
 
 import org.apache.commons.lang3.ObjectUtils;
+
+
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 
 public class EcritureComptableTest {
@@ -20,25 +24,24 @@ public class EcritureComptableTest {
         return vRetour;
     }
 
-  /*  @Test
+    @Disabled("tester getTotalDebitTest")
+    @org.junit.jupiter.api.Test
     public void getTotalDebitTest(){
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
-
-        vEcriture.setLibelle("Equilibrée");
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.00", "33"));
+        System.out.println("aqsdfjkglh:nbvcx");
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100", "33"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
-
-        Assert.assertEquals(vEcriture.getTotalDebit(),340.50);
-    }*/
+        Assert.assertEquals(341,340);
+    }
 
     @Test
+    @DisplayName("test prout")
     public void isEquilibree() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
-
         vEcriture.setLibelle("Equilibrée");
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));

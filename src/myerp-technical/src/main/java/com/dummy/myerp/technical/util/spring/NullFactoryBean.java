@@ -1,7 +1,7 @@
 package com.dummy.myerp.technical.util.spring;
 
-import org.springframework.beans.factory.FactoryBean;
 
+import org.springframework.beans.factory.FactoryBean;
 
 /**
  * {@link FactoryBean} permettant de déclarer des Beans d'une classe spécifique et valant <code>null</code>.
