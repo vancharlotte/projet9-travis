@@ -1,6 +1,7 @@
 package com.dummy.myerp.model.bean.comptabilite;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -24,17 +25,29 @@ public class EcritureComptableTest {
         return vRetour;
     }
 
-    @Disabled("tester getTotalDebitTest")
+
     @org.junit.jupiter.api.Test
     public void getTotalDebitTest(){
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
-        System.out.println("aqsdfjkglh:nbvcx");
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "200", null));
-        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100", "33"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
-        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
-        Assert.assertEquals(341,340);
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "50.00"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "100"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40.00", "40.50"));
+        Assert.assertEquals(new BigDecimal(200+100.50+40.00).setScale(2, RoundingMode.HALF_UP),vEcriture.getTotalDebit());
+
+    }
+
+    @org.junit.jupiter.api.Test
+    public void getTotalCreditTest(){
+        EcritureComptable vEcriture;
+        vEcriture = new EcritureComptable();
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "200", null));
+        vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "50.00"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "100"));
+        vEcriture.getListLigneEcriture().add(this.createLigne(2, "40.00", "40.50"));
+        Assert.assertEquals(new BigDecimal(50.00+100+40.50).setScale(2, RoundingMode.HALF_UP),vEcriture.getTotalCredit());
+
     }
 
     @Test
