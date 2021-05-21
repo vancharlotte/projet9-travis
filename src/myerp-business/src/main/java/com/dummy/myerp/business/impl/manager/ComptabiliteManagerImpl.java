@@ -6,8 +6,10 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
@@ -35,10 +37,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     }
 
 
+
     // ==================== Getters/Setters ====================
     @Override
     public List<CompteComptable> getListCompteComptable() {
         return getDaoProxy().getComptabiliteDao().getListCompteComptable();
+        //doit retourner daoProxyImpl et pas daoProxy
     }
 
 
@@ -74,6 +78,26 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
                     (table sequence_ecriture_comptable)
          */
+
+        /* 1. get journal et date de pEcritureComptable
+                get sequence avec ce code journal et l'année de l'écriture
+           2. si pas de sequence trouvée (par encore écrite dans le journal pour cette année-là) créer nouvelle séquence
+              si sequence trouvée, modifier +1 la sequence existante.
+           3. add reference à l'écriture + vérifier le format est correct RG5
+           4. inert ou update la valeur de la sequence dans la table sequnce_écriture_comptable
+           mais pas de l'écriture ATTENTION
+
+        */  String reference = pEcritureComptable.getReference();
+            if (reference==null){
+                pEcritureComptable.getJournal();
+                pEcritureComptable.getDate();
+                // creer new reference*/
+            }
+            else{
+                // sequence + 1 à la fin
+            }
+
+
     }
 
     /**

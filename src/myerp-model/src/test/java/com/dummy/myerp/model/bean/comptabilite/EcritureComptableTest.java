@@ -7,8 +7,6 @@ import org.apache.commons.lang3.ObjectUtils;
 
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
@@ -26,7 +24,7 @@ public class EcritureComptableTest {
     }
 
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void getTotalDebitTest(){
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
@@ -38,7 +36,7 @@ public class EcritureComptableTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void getTotalCreditTest(){
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
@@ -51,7 +49,6 @@ public class EcritureComptableTest {
     }
 
     @Test
-    @DisplayName("test prout")
     public void isEquilibree() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();

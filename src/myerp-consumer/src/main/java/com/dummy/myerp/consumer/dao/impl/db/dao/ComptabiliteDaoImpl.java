@@ -3,6 +3,7 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import java.sql.Types;
 import java.util.List;
 
+import javafx.beans.NamedArg;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,11 +20,15 @@ import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
 
 
 /**
  * Implémentation de l'interface {@link ComptabiliteDao}
  */
+
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {
 
     // ==================== Constructeurs ====================
@@ -44,6 +49,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
      */
     protected ComptabiliteDaoImpl() {
         super();
+
     }
 
 
