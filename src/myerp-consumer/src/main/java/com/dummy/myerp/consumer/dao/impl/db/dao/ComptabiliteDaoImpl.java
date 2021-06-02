@@ -3,22 +3,16 @@ package com.dummy.myerp.consumer.dao.impl.db.dao;
 import java.sql.Types;
 import java.util.List;
 
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.*;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import javafx.beans.NamedArg;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.CompteComptableRM;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalComptableRM;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.LigneEcritureComptableRM;
 import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.springframework.stereotype.Repository;
 
@@ -273,4 +267,72 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         vSqlParams.addValue("ecriture_id", pEcritureId);
         vJdbcTemplate.update(SQLdeleteListLigneEcritureComptable, vSqlParams);
     }
+
+    // ==================== SequenceEcritureComptable - GET ====================
+
+
+    private static String SQLgetSequenceEcritureComptableByCodeAndYear;
+    public void setSQLgetSequenceEcritureComptableByCodeAndYear(String pSQLgetSequenceEcritureComptable) {
+        SQLgetSequenceEcritureComptableByCodeAndYear = pSQLgetSequenceEcritureComptable;
+    }
+
+    @Override
+    public SequenceEcritureComptable getSequenceEcritureComptableByCodeAndYear(String journal_code, int year) throws NotFoundException {
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
+        MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
+        vSqlParams.addValue("journal_code", journal_code);
+        vSqlParams.addValue("annee", year);
+
+        SequenceEcritureComptableRM vRM = new SequenceEcritureComptableRM();
+        SequenceEcritureComptable vBean;
+        try{
+            vBean = vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptableByCodeAndYear, vSqlParams, vRM);
+        }catch (EmptyResultDataAccessException vEx){
+            throw new NotFoundException(
+                    "SequenceEcritureComptable non trouvée : " +
+                            "journal=" + journal_code +
+                            "année=" + year
+            );
+        }
+
+        return vBean;
+
+    }
+
+    // ==================== SequenceEcritureComptable - UPDATE ====================
+
+    private static String SQLupdateSequenceEcritureComptable;
+    public void setSQLupdateSequenceEcritureComptable(String pSQLgetSequenceEcritureComptable) {
+        SQLupdateSequenceEcritureComptable = pSQLgetSequenceEcritureComptable;
+    }
+
+    @Override
+    public void updateSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable) {
+
+    }
+
+    // ==================== SequenceEcritureComptable - INSERT ====================
+
+    private static String SQLinsertSequenceEcritureComptable;
+    public void setSQLinsertSequenceEcritureComptable(String pSQLgetSequenceEcritureComptable) {
+        SQLinsertSequenceEcritureComptable = pSQLgetSequenceEcritureComptable;
+    }
+
+    @Override
+    public void insertSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable) {
+
+    }
+
+    // ==================== SequenceEcritureComptable - DELETE ====================
+
+    private static String SQLdeleteSequenceEcritureComptable;
+    public void setSQLdeleteSequenceEcritureComptable(String pSQLgetSequenceEcritureComptable) {
+        SQLdeleteSequenceEcritureComptable = pSQLgetSequenceEcritureComptable;
+    }
+    @Override
+    public void deleteSequenceEcritureComptable(SequenceEcritureComptable sequenceEcritureComptable) {
+
+    }
+
+
 }

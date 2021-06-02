@@ -85,11 +85,12 @@ public interface ComptabiliteDao {
     // ==================== SequenceEcritureComptable ====================
 
     /**
-     * Renvoie la liste des SequenceEcritureComptable en fonction de l'année indiquée {@code year}.
+     * Renvoie la SequenceEcritureComptable en fonction de l'année indiquée {@code year} et du code journal {@code journal_code}.
      *
      * @param year l'année des séquences écritures comptables à retourner
+     * @param journal_code code du journal de l'écriture comptable
      */
-    List<SequenceEcritureComptable> getListSequenceEcritureComptable(Integer year);
+    SequenceEcritureComptable getSequenceEcritureComptableByCodeAndYear(String journal_code, int year) throws NotFoundException;
 
     /**
      * Met à jour une séquence écriture comptable {@code sequenceEcritureComptable}.
