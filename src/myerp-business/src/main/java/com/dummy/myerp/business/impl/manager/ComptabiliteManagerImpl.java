@@ -69,6 +69,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable)
+
                 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                         1. Utiliser le numéro 1.
                     * Sinon :
@@ -86,31 +87,31 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
            4. inert ou update la valeur de la sequence dans la table sequnce_écriture_comptable
            mais pas de l'écriture ATTENTION
 
-        */  String reference = pEcritureComptable.getReference();
-            if (reference!=null){
-                String codeSequence = pEcritureComptable.getJournal().getCode();
-                int yearSequence = pEcritureComptable.getDate().getYear() + 1900;
+        */
+        SequenceEcritureComptable sEC = new SequenceEcritureComptable();
+        String codeSequence =pEcritureComptable.getJournal().getCode();
+        int anneeSequence = pEcritureComptable.getDate().getYear()+1900;
 
+        try {
+            sEC = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear(codeSequence,anneeSequence);
+            sEC.setDerniereValeur(sEC.getDerniereValeur()+1);
 
+        } catch (NotFoundException e) {
+            sEC.setCodeJournal(codeSequence);
+            sEC.setAnnee(anneeSequence);
+            sEC.setDerniereValeur(00001);
+            e.printStackTrace();
+        }
 
-                // recherche dans sequence, par code et année, derniere valeur
-                // last value = resultat
-                // ajouter +1
-                // ajotuer en fin de sequence
-                 reference = pEcritureComptable.getJournal().getCode()+"-"+
-                                        pEcritureComptable.getDate().getYear()+1900+"/" + "(lastvalue + 1)";
+        //checkSequence RG5
 
-            }
-            else{
-                // creer nouvelle sequence + 1 à la fin
-                reference=pEcritureComptable.getJournal().getCode()+"-"+
-                        pEcritureComptable.getDate().getYear()+1900+"/"+
-                        "00001";
-            }
+        pEcritureComptable.setReference(sEC.getCodeJournal()+"-"+sEC.getAnnee()+"/"+sEC.getDerniereValeur());
+        if (sEC.getDerniereValeur() == 00001) {
+            getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(sEC);
+        } else {
+            getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sEC);
+        }
 
-            pEcritureComptable.setReference(reference);
-            //verif rg5 (format sequence)
-            //insert/update sequence.
 
     }
 
