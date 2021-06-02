@@ -13,11 +13,5 @@
 
     <context:property-placeholder location="classpath:com/dummy/myerp/consumer/dbmyerp.properties"/>
 
-    <bean id="dataSourceMYERP" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://localhost:9032/db_myerp" />
-        <property name="username" value="usr_myerp" />
-        <property name="password" value="myerp" />
-    </bean>
 
 </beans>

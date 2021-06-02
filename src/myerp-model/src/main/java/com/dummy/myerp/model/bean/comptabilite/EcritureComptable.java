@@ -31,7 +31,8 @@ public class EcritureComptable {
     /**
      * The Reference.
      */
-    @Pattern(regexp = "\\d{1,5}-\\d{4}/\\d{5}")
+    //ERROR : le code journal peut être des lettres ou des digits d --> w
+    @Pattern(regexp = "\\w{1,5}-\\d{4}/\\d{5}")
     private String reference;
     /**
      * The Date.
