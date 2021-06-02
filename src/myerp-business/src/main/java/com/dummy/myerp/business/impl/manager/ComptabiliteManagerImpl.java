@@ -8,6 +8,7 @@ import javax.sound.midi.Sequence;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import org.apache.commons.lang3.ObjectUtils;
@@ -86,22 +87,37 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
            mais pas de l'écriture ATTENTION
 
         */  String reference = pEcritureComptable.getReference();
-            if (reference==null){
-                pEcritureComptable.getJournal();
-                pEcritureComptable.getDate();
-                // creer new reference*/
+            if (reference!=null){
+                String codeSequence = pEcritureComptable.getJournal().getCode();
+                int yearSequence = pEcritureComptable.getDate().getYear() + 1900;
+
+
+
+                // recherche dans sequence, par code et année, derniere valeur
+                // last value = resultat
+                // ajouter +1
+                // ajotuer en fin de sequence
+                 reference = pEcritureComptable.getJournal().getCode()+"-"+
+                                        pEcritureComptable.getDate().getYear()+1900+"/" + "(lastvalue + 1)";
+
             }
             else{
-                // sequence + 1 à la fin
+                // creer nouvelle sequence + 1 à la fin
+                reference=pEcritureComptable.getJournal().getCode()+"-"+
+                        pEcritureComptable.getDate().getYear()+1900+"/"+
+                        "00001";
             }
 
+            pEcritureComptable.setReference(reference);
+            //verif rg5 (format sequence)
+            //insert/update sequence.
 
     }
 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
+    // DO à tester
     @Override
     public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptableUnit(pEcritureComptable);
@@ -154,7 +170,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
+        // DO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
         String[] parts = pEcritureComptable.getReference().split("\\p{Punct}");
         String codeJournal = parts[0];
