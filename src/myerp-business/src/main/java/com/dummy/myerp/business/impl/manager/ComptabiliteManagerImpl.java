@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolationException;
 
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -79,18 +80,13 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                     (table sequence_ecriture_comptable)
          */
 
-        /* 1. get journal et date de pEcritureComptable
-                get sequence avec ce code journal et l'année de l'écriture
-           2. si pas de sequence trouvée (par encore écrite dans le journal pour cette année-là) créer nouvelle séquence
-              si sequence trouvée, modifier +1 la sequence existante.
-           3. add reference à l'écriture + vérifier le format est correct RG5
-           4. inert ou update la valeur de la sequence dans la table sequnce_écriture_comptable
-           mais pas de l'écriture ATTENTION
 
-        */
         SequenceEcritureComptable sEC = new SequenceEcritureComptable();
         String codeSequence =pEcritureComptable.getJournal().getCode();
-        int anneeSequence = pEcritureComptable.getDate().getYear()+1900;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pEcritureComptable.getDate());
+        int anneeSequence = calendar.get(calendar.YEAR);
 
         try {
             sEC = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear(codeSequence,anneeSequence);
@@ -103,9 +99,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             e.printStackTrace();
         }
 
-        //checkSequence RG5
-
         pEcritureComptable.setReference(sEC.getCodeJournal()+"-"+sEC.getAnnee()+"/"+sEC.getDerniereValeur());
+
+        try {
+            checkRG55(pEcritureComptable);
+        } catch (FunctionalException e) {
+            e.printStackTrace();
+        }
+
         if (sEC.getDerniereValeur() == 00001) {
             getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(sEC);
         } else {
@@ -173,6 +174,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // DO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+
+        checkRG55(pEcritureComptable);
+
+    }
+
+    private void checkRG55(EcritureComptable pEcritureComptable)  throws FunctionalException  {
         String[] parts = pEcritureComptable.getReference().split("\\p{Punct}");
         String codeJournal = parts[0];
         String date = parts[1];
@@ -187,8 +194,8 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             throw new FunctionalException(
                     "La date de la référence ne correspond pas à l'année d'écriture.");
         }
-    }
 
+    }
 
 
     /**
