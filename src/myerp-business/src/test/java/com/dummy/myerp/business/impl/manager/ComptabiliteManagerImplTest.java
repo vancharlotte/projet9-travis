@@ -2,36 +2,59 @@ package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.business.impl.TransactionManager;
+import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
+import com.dummy.myerp.model.bean.comptabilite.*;
+import com.sun.deploy.cache.BaseLocalApplicationProperties;
 import org.junit.Assert;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class ComptabiliteManagerImplTest {
 
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 
+    @Mock
+    private ComptabiliteDao comptabiliteDao;
+
+    @Mock
+    private DaoProxy daoProxy;
+
+    @Mock
+    private BusinessProxy businessProxy;
+
+    //mock la classe daoproxy
     @BeforeAll
     private static void injectMockDao() {
         DaoProxy daoProxyMock = mock(DaoProxy.class, Mockito.RETURNS_DEEP_STUBS);
         AbstractBusinessManager.configure(null, daoProxyMock, null);
+
+        SequenceEcritureComptable vSEQ = new SequenceEcritureComptable();
+        vSEQ.setCodeJournal("AC");
+        vSEQ.setAnnee(2021);
+        vSEQ.setDerniereValeur(00001);
+        when(daoProxyMock.getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear("AC",2021)).thenReturn(vSEQ);
+        when(daoProxyMock.getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear("AA",2021)).thenReturn(null);
+
     }
+
 
     @Test
     public void getListCompteComptableTest(){
@@ -52,20 +75,32 @@ public class ComptabiliteManagerImplTest {
 
 
     @Test
-    public void AddRef_NotNull(){
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
+    public void AddRef_SequenceNotNull(){
+        EcritureComptable vEcritureComptable = new EcritureComptable();
         vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
         vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setReference("AC-2021/00005");
+
         manager.addReference(vEcritureComptable);
-        vEcritureComptable.setReference("AC-2021/00001");
-        System.out.println(vEcritureComptable.getDate().getYear()+1900);
-        Assert.assertNotNull(vEcritureComptable.getReference(),vEcritureComptable.getReference());
+
+        Assert.assertNotNull(vEcritureComptable.getReference());
+        Assert.assertEquals("AC-2021/2",vEcritureComptable.getReference());
+
+
 
     }
 
     @Test
-    public void AddRef_VerifyRG5(){
+    public void AddRef_SequenceNull(){
+        EcritureComptable vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AA", "Achat"));
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setReference(null);
+
+        manager.addReference(vEcritureComptable);
+
+        Assert.assertNotNull(vEcritureComptable.getReference());
+
 
     }
 

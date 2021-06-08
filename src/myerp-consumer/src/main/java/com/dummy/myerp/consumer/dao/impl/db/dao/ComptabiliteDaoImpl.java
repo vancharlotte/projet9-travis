@@ -6,6 +6,8 @@ import java.util.List;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.*;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import javafx.beans.NamedArg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,6 +26,9 @@ import javax.sql.DataSource;
  */
 
 public class ComptabiliteDaoImpl extends AbstractDbConsumer implements ComptabiliteDao {
+
+    private static final Logger logger = LoggerFactory.getLogger(ComptabiliteDaoImpl.class);
+
 
     // ==================== Constructeurs ====================
     /** Instance unique de la classe (design pattern Singleton) */
@@ -45,6 +50,7 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
         super();
 
     }
+
 
 
     // ==================== Méthodes ====================
@@ -277,22 +283,22 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
     }
 
     @Override
-    public SequenceEcritureComptable getSequenceEcritureComptableByCodeAndYear(String journal_code, int year) throws NotFoundException {
+    public SequenceEcritureComptable getSequenceEcritureComptableByCodeAndYear(String journal_code, int year) {
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource(DataSourcesEnum.MYERP));
         MapSqlParameterSource vSqlParams = new MapSqlParameterSource();
         vSqlParams.addValue("journal_code", journal_code);
         vSqlParams.addValue("annee", year);
-
         SequenceEcritureComptableRM vRM = new SequenceEcritureComptableRM();
         SequenceEcritureComptable vBean;
         try{
             vBean = vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptableByCodeAndYear, vSqlParams, vRM);
         }catch (EmptyResultDataAccessException vEx){
-            throw new NotFoundException(
-                    "SequenceEcritureComptable non trouvée : " +
+            logger.info("SequenceEcritureComptable non trouvée : " +
                             "journal=" + journal_code +
-                            "année=" + year
-            );
+                            "année=" + year);
+
+            return null;
+
         }
 
         return vBean;

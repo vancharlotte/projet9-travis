@@ -12,6 +12,7 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.model.bean.comptabilite.*;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +63,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
+    // TO DO à tester : done
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
-        // TODO à implémenter
+        // TO DO à implémenter : done
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
@@ -81,28 +82,30 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
          */
 
 
-        SequenceEcritureComptable sEC = new SequenceEcritureComptable();
+        SequenceEcritureComptable sEC;
         String codeSequence =pEcritureComptable.getJournal().getCode();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(pEcritureComptable.getDate());
         int anneeSequence = calendar.get(calendar.YEAR);
+        sEC = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear(codeSequence,anneeSequence);
 
-        try {
-            sEC = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear(codeSequence,anneeSequence);
+        if (sEC!=null){
             sEC.setDerniereValeur(sEC.getDerniereValeur()+1);
 
-        } catch (NotFoundException e) {
+        } else {
+            sEC = new SequenceEcritureComptable();
             sEC.setCodeJournal(codeSequence);
             sEC.setAnnee(anneeSequence);
             sEC.setDerniereValeur(00001);
-            e.printStackTrace();
+
         }
 
         pEcritureComptable.setReference(sEC.getCodeJournal()+"-"+sEC.getAnnee()+"/"+sEC.getDerniereValeur());
 
+
         try {
-            checkRG55(pEcritureComptable);
+           checkRG55(pEcritureComptable);
         } catch (FunctionalException e) {
             e.printStackTrace();
         }
@@ -185,9 +188,10 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         String date = parts[1];
 
         //verifier que le code dans la ref = le code du journal
-        if(!codeJournal.equals(pEcritureComptable.getJournal().getCode()))
+        if(!codeJournal.equals(pEcritureComptable.getJournal().getCode())){
             throw new FunctionalException(
                     "Le code journal de la référence est différent du code journal.");
+        }
 
         //vérifier que l'année dans la ref = l'année de l'écriture
         if(Integer.parseInt(date)!= Calendar.getInstance().get(Calendar.YEAR)){
