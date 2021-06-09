@@ -2,30 +2,23 @@ package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.dummy.myerp.business.contrat.BusinessProxy;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.business.impl.TransactionManager;
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
-import com.sun.deploy.cache.BaseLocalApplicationProperties;
-import org.junit.Assert;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 
 public class ComptabiliteManagerImplTest {
 
@@ -61,7 +54,7 @@ public class ComptabiliteManagerImplTest {
         List<CompteComptable> listeCompteComptableTest =  new ArrayList<CompteComptable>();
         listeCompteComptableTest = manager.getListCompteComptable();
 
-        Assert.assertNotNull(listeCompteComptableTest.size());
+        assertNotNull(listeCompteComptableTest.size());
     }
 
     @Test
@@ -69,7 +62,7 @@ public class ComptabiliteManagerImplTest {
         List<JournalComptable> listeJournalComptableTest =  new ArrayList<JournalComptable>();
         listeJournalComptableTest = manager.getListJournalComptable();
 
-        Assert.assertNotNull(listeJournalComptableTest.size());
+        assertNotNull(listeJournalComptableTest.size());
     }
 
 
@@ -83,8 +76,8 @@ public class ComptabiliteManagerImplTest {
 
         manager.addReference(vEcritureComptable);
 
-        Assert.assertNotNull(vEcritureComptable.getReference());
-        Assert.assertEquals("AC-2021/2",vEcritureComptable.getReference());
+        assertNotNull(vEcritureComptable.getReference());
+        assertEquals("AC-2021/2",vEcritureComptable.getReference());
 
 
 
@@ -99,7 +92,7 @@ public class ComptabiliteManagerImplTest {
 
         manager.addReference(vEcritureComptable);
 
-        Assert.assertNotNull(vEcritureComptable.getReference());
+        assertNotNull(vEcritureComptable.getReference());
 
 
     }
@@ -122,7 +115,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     //expected throw "L'écriture comptable ne respecte pas les contraintes de validation"
-    @Test
+
     public void checkEcritureComptableUnitViolation() throws Exception {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();

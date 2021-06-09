@@ -6,8 +6,12 @@ import java.math.RoundingMode;
 import org.apache.commons.lang3.ObjectUtils;
 
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 
 public class EcritureComptableTest {
@@ -32,7 +36,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "50.00"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "100"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40.00", "40.50"));
-        Assert.assertEquals(new BigDecimal(200+100.50+40.00).setScale(2, RoundingMode.HALF_UP),vEcriture.getTotalDebit());
+        assertEquals(new BigDecimal(200+100.50+40.00).setScale(2, RoundingMode.HALF_UP),vEcriture.getTotalDebit());
 
     }
 
@@ -44,7 +48,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "50.00"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "100"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40.00", "40.50"));
-        Assert.assertEquals(new BigDecimal(50.00+100+40.50).setScale(2, RoundingMode.HALF_UP),vEcriture.getTotalCredit());
+        assertEquals(new BigDecimal(50.00+100+40.50).setScale(2, RoundingMode.HALF_UP),vEcriture.getTotalCredit());
 
     }
 
@@ -57,7 +61,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "40", "7"));
-        Assert.assertTrue(vEcriture.toString(), vEcriture.isEquilibree());
+        assertTrue(vEcriture.isEquilibree(), vEcriture.toString());
 
         vEcriture.getListLigneEcriture().clear();
         vEcriture.setLibelle("Non équilibrée");
@@ -65,7 +69,7 @@ public class EcritureComptableTest {
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "20", "1"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "30"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, "1", "2"));
-        Assert.assertFalse(vEcriture.toString(), vEcriture.isEquilibree());
+        assertFalse(vEcriture.isEquilibree(), vEcriture.toString());
 
     }
 
