@@ -1,20 +1,24 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import javax.sound.midi.Sequence;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
+import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
+import com.dummy.myerp.model.bean.comptabilite.*;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
@@ -33,6 +37,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      */
     public ComptabiliteManagerImpl() {
     }
+
 
 
     // ==================== Getters/Setters ====================
@@ -58,14 +63,15 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
+    // TO DO à tester : done
     @Override
     public synchronized void addReference(EcritureComptable pEcritureComptable) {
-        // TODO à implémenter
+        // TO DO à implémenter : done
         // Bien se réferer à la JavaDoc de cette méthode !
         /* Le principe :
                 1.  Remonter depuis la persitance la dernière valeur de la séquence du journal pour l'année de l'écriture
                     (table sequence_ecriture_comptable)
+
                 2.  * S'il n'y a aucun enregistrement pour le journal pour l'année concernée :
                         1. Utiliser le numéro 1.
                     * Sinon :
@@ -74,12 +80,49 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 4.  Enregistrer (insert/update) la valeur de la séquence en persitance
                     (table sequence_ecriture_comptable)
          */
+
+
+        SequenceEcritureComptable sEC;
+        String codeSequence =pEcritureComptable.getJournal().getCode();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pEcritureComptable.getDate());
+        int anneeSequence = calendar.get(calendar.YEAR);
+        sEC = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear(codeSequence,anneeSequence);
+
+        if (sEC!=null){
+            sEC.setDerniereValeur(sEC.getDerniereValeur()+1);
+
+        } else {
+            sEC = new SequenceEcritureComptable();
+            sEC.setCodeJournal(codeSequence);
+            sEC.setAnnee(anneeSequence);
+            sEC.setDerniereValeur(00001);
+
+        }
+
+        pEcritureComptable.setReference(sEC.getCodeJournal()+"-"+sEC.getAnnee()+"/"+sEC.getDerniereValeur());
+
+
+        try {
+           checkRG55(pEcritureComptable);
+        } catch (FunctionalException e) {
+            e.printStackTrace();
+        }
+
+        if (sEC.getDerniereValeur() == 00001) {
+            getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(sEC);
+        } else {
+            getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(sEC);
+        }
+
+
     }
 
     /**
      * {@inheritDoc}
      */
-    // TODO à tester
+    // DO à tester
     @Override
     public void checkEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
         this.checkEcritureComptableUnit(pEcritureComptable);
@@ -94,7 +137,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
      * @param pEcritureComptable -
      * @throws FunctionalException Si l'Ecriture comptable ne respecte pas les règles de gestion
      */
-    // TODO tests à compléter
+    // TO DO tests à compléter
     protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
         // ===== Vérification des contraintes unitaires sur les attributs de l'écriture
         Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
@@ -132,8 +175,30 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
-        // TODO ===== RG_Compta_5 : Format et contenu de la référence
+        // DO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
+
+        checkRG55(pEcritureComptable);
+
+    }
+
+    private void checkRG55(EcritureComptable pEcritureComptable)  throws FunctionalException  {
+        String[] parts = pEcritureComptable.getReference().split("\\p{Punct}");
+        String codeJournal = parts[0];
+        String date = parts[1];
+
+        //verifier que le code dans la ref = le code du journal
+        if(!codeJournal.equals(pEcritureComptable.getJournal().getCode())){
+            throw new FunctionalException(
+                    "Le code journal de la référence est différent du code journal.");
+        }
+
+        //vérifier que l'année dans la ref = l'année de l'écriture
+        if(Integer.parseInt(date)!= Calendar.getInstance().get(Calendar.YEAR)){
+            throw new FunctionalException(
+                    "La date de la référence ne correspond pas à l'année d'écriture.");
+        }
+
     }
 
 

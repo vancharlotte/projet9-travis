@@ -5,6 +5,8 @@ import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
+import java.util.logging.Logger;
+
 
 /**
  * <p>Implémentation du Proxy d'accès à la couche Business.</p>
