@@ -1,13 +1,29 @@
+image: maven:latest
+
 stages:
   - build
   - test
 
+cache:
+  paths:
+    - .m2/repository/
+    -
 build-job:
   stage: build
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - "echo \" BUILD\"
+    - "mvn compile -f src"
 
-test-job1:
+
+test-business:
   stage: test
   script:
-    - echo "This job tests something"
+    - "echo \" TEST-BUSINESS\"
+    - "mvn test -f src -P test-business"
+
+test-consumer:
+  stage: test
+  script:
+    - "echo \" TEST-CONSUMER\"
+    - "mvn test -f src -P test-consumer"
+
