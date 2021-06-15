@@ -16,18 +16,18 @@ build-job:
   stage: build
   script:
     - echo \" BUILD\"
-    - 'mvn compile -f src'
+    - mvn compile -f src
 
 
 test-business:
   stage: test
   script:
     - echo \" TEST-BUSINESS\"
-    - 'mvn test -f src -P test-business'
+    - mvn test -f src -P test-business
 
 test-consumer:
   stage: test
   script:
     - echo \" TEST-CONSUMER\"
-    - 'mvn test -f src -P test-consumer'
+    - mvn test -f src -P test-consumer
 
