@@ -9,7 +9,7 @@ cache:
     - .m2/repository/
 
 
-build-docker:
+before-script:
   image: docker:latest
   stage: build
   script:
