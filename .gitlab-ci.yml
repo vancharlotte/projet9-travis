@@ -8,9 +8,6 @@ cache:
   paths:
     - .m2/repository/
 
-before_script:
-    - cd docker/dev
-    - docker-compose up
 
 build-job:
   stage: build
