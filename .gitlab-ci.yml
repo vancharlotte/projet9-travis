@@ -15,6 +15,7 @@ before-script:
   script:
     - echo \" BUILD BDD\"
     - cd docker/dev
+    - docker-compose build
     - docker-compose up
     
 build-job:
