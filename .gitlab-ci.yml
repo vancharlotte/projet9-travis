@@ -10,7 +10,7 @@ cache:
 
 
 build-docker:
-  image: docker:lastest
+  image: docker:latest
   stage: build
   script:
     - echo \" BUILD BDD\"
