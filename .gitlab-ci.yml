@@ -8,14 +8,14 @@ cache:
 
 
 before-script:
-  image: docker-compose:latest
-  services:
-  - docker:dind 
-  stage: build
-  script:
+  image: docker:latest
+services:
+  - docker:dind    
+script:
     - echo \" BUILD BDD\"
     - cd docker/dev
-    - docker-compose up
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
     
 build-job:
   image:  maven:3.6.3-openjdk-8
