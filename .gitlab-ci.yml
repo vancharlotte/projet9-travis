@@ -1,4 +1,6 @@
-image:  maven:3.6.3-openjdk-8
+image: maven:latest
+services:
+  - docker:latest
 
 stages:
   - build
@@ -8,22 +10,26 @@ cache:
   paths:
     - .m2/repository/
 
+before_script:
+    - cd docker/dev
+    - docker-compose up
 
 build-job:
   stage: build
   script:
-    - echo \" BUILD\"
-    - mvn compile -f src
+    - "echo \" BUILD\"
+    - "mvn compile -f src"
 
 
 test-business:
   stage: test
   script:
-    - echo \" TEST-BUSINESS\"
-    - mvn test -f src -P test-business
+    - "echo \" TEST-BUSINESS\"
+    - "mvn test -f src -P test-business"
 
 test-consumer:
   stage: test
   script:
-    - echo \" TEST-CONSUMER\"
-    - mvn test -f src -P test-consumer
+    - "echo \" TEST-CONSUMER\"
+    - "mvn test -f src -P test-consumer"
+
