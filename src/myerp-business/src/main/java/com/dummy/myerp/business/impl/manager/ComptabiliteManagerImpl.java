@@ -181,6 +181,11 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         String codeJournal = parts[0];
         String date = parts[1];
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(pEcritureComptable.getDate());
+
+
+
         //verifier que le code dans la ref = le code du journal
         if(!codeJournal.equals(pEcritureComptable.getJournal().getCode())){
             throw new FunctionalException(
@@ -188,7 +193,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
 
         //vérifier que l'année dans la ref = l'année de l'écriture
-        if(Integer.parseInt(date)!= Calendar.getInstance().get(Calendar.YEAR)){
+        if(Integer.parseInt(date)!= calendar.get(Calendar.YEAR)){
             throw new FunctionalException(
                     "La date de la référence ne correspond pas à l'année d'écriture.");
         }
@@ -216,6 +221,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 // c'est qu'il y a déjà une autre écriture avec la même référence
                 if (pEcritureComptable.getId() == null
                     || !pEcritureComptable.getId().equals(vECRef.getId())) {
+                    System.out.println(pEcritureComptable.getId() +" = "+vECRef.getId());
                     throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
                 }
             } catch (NotFoundException vEx) {
@@ -224,14 +230,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public EcritureComptable getEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
+
+    public EcritureComptable getEcritureComptable(int pEcritureComptableId) throws FunctionalException {
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         EcritureComptable ecritureComptable;
         try {
-            ecritureComptable = getDaoProxy().getComptabiliteDao().getEcritureComptable(pEcritureComptable.getId());
+            ecritureComptable = getDaoProxy().getComptabiliteDao().getEcritureComptable(pEcritureComptableId);
             getTransactionManager().commitMyERP(vTS);
             vTS = null;
         } catch (NotFoundException e) {
@@ -240,6 +244,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             getTransactionManager().rollbackMyERP(vTS);
         }
     return ecritureComptable;}
+
 
     /**
      * {@inheritDoc}
@@ -260,13 +265,16 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
     /**
      * {@inheritDoc}
      */
+    //ERROR : add checkEcritureComptable
     @Override
     public void updateEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
+        this.checkEcritureComptable(pEcritureComptable);
         TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
         try {
             getDaoProxy().getComptabiliteDao().updateEcritureComptable(pEcritureComptable);
             getTransactionManager().commitMyERP(vTS);
             vTS = null;
+
         } finally {
             getTransactionManager().rollbackMyERP(vTS);
         }
