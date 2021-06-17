@@ -5,6 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <import resource="classpath:/com/dummy/myerp/business/applicationContext.xml"/>
+    <import resource="classpath:/com/dummy/myerp/model/applicationContext.xml"/>
+    <import resource="classpath:/com/dummy/myerp/technical/applicationContext.xml"/>
+
 
     <!-- ====================   Consumer   ==================== -->
     <!-- AbstractDbConsumer -->
@@ -49,14 +53,14 @@
          <constructor-arg value="javax.sql.DataSource"/>
      </bean> -->
 
-     <context:property-placeholder location="classpath:com/dummy/myerp/consumer/dbmyerp.properties"/>
+    <bean id="dataSourceMYERP" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:9032/db_myerp" />
+        <property name="username" value="usr_myerp" />
+        <property name="password" value="myerp" />
+    </bean>
 
-     <bean id="dataSourceMYERP" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-         <property name="driverClassName" value="org.postgresql.Driver" />
-         <property name="url" value="jdbc:postgresql://localhost:9032/db_myerp" />
-         <property name="username" value="usr_myerp" />
-         <property name="password" value="myerp" />
-     </bean>
+
 
 
      <!-- ========== SQL ========== -->

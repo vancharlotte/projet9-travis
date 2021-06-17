@@ -7,13 +7,9 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import com.dummy.myerp.consumer.dao.impl.DaoProxyImpl;
-import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
@@ -85,7 +81,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(pEcritureComptable.getDate());
-        int anneeSequence = calendar.get(calendar.YEAR);
+        int anneeSequence = calendar.get(Calendar.YEAR);
         sEC = getDaoProxy().getComptabiliteDao().getSequenceEcritureComptableByCodeAndYear(codeSequence,anneeSequence);
 
         if (sEC!=null){
@@ -227,6 +223,23 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
             }
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public EcritureComptable getEcritureComptable(EcritureComptable pEcritureComptable) throws FunctionalException {
+        TransactionStatus vTS = getTransactionManager().beginTransactionMyERP();
+        EcritureComptable ecritureComptable;
+        try {
+            ecritureComptable = getDaoProxy().getComptabiliteDao().getEcritureComptable(pEcritureComptable.getId());
+            getTransactionManager().commitMyERP(vTS);
+            vTS = null;
+        } catch (NotFoundException e) {
+            return null;
+        } finally {
+            getTransactionManager().rollbackMyERP(vTS);
+        }
+    return ecritureComptable;}
 
     /**
      * {@inheritDoc}

@@ -11,6 +11,7 @@ import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.testbusiness.business.SpringRegistry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -20,18 +21,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+
 public class ComptabiliteManagerImplTest {
 
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 
-    @Mock
-    private ComptabiliteDao comptabiliteDao;
+
 
     @Mock
-    private DaoProxy daoProxy;
+    private ComptabiliteDao comptabiliteDaoMock;
 
     @Mock
-    private BusinessProxy businessProxy;
+    private DaoProxy daoProxyMock;
+
+    @Mock
+    private BusinessProxy businessProxyMock;
 
     //mock la classe daoproxy
     @BeforeAll
@@ -115,7 +119,7 @@ public class ComptabiliteManagerImplTest {
     }
 
     //expected throw "L'écriture comptable ne respecte pas les contraintes de validation"
-
+    @Test
     public void checkEcritureComptableUnitViolation() throws Exception {
         EcritureComptable vEcritureComptable;
         vEcritureComptable = new EcritureComptable();
@@ -212,10 +216,47 @@ public class ComptabiliteManagerImplTest {
     }
 
     @Test
-    public void insertEcritureComptableTest() throws FunctionalException {
+    public void getEcritureComptableTest() throws FunctionalException {
+        SpringRegistry.init();
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setReference("AC-2016/00001");
+        vEcritureComptable.setId(-1);
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        assertNotNull(manager.getEcritureComptable(vEcritureComptable));
     }
 
-    public void updateEcritureComptablTest(){
+    @Test
+    public void insertEcritureComptableTest() throws FunctionalException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setReference("AC-2016/00001");
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        System.out.println(vEcritureComptable.getReference());
+        manager.insertEcritureComptable(vEcritureComptable);
+
+       /* EcritureComptable eb =
+                getDaoProxy().getComptabiliteDao()
+                        .getEcritureComptableByRef("BB-2021/00001");
+        Assert.assertEquals("BB-2021/00001", eb.getReference());
+        manager.deleteEcritureComptable(eb.getId());*/
+    }
+
+    @Test
+    public void updateEcritureComptablTest() throws FunctionalException {
+        EcritureComptable vEcritureComptable;
+        vEcritureComptable = new EcritureComptable();
+        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+        vEcritureComptable.setReference("AC-2016/00001");
+        vEcritureComptable.setId(-5);
+        vEcritureComptable.setDate(new Date());
+        vEcritureComptable.setLibelle("Libelle");
+        System.out.println(vEcritureComptable.getReference());
+        manager.updateEcritureComptable(vEcritureComptable);
 
     }
 

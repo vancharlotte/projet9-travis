@@ -6,12 +6,8 @@
                         http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="classpath:/com/dummy/myerp/business/applicationContext.xml"/>
-    <import resource="classpath:/com/dummy/myerp/business/transactionContext.xml"/>
-
     <import resource="classpath:/com/dummy/myerp/consumer/applicationContext.xml"/>
-    <import resource="classpath:/com/dummy/myerp/consumer/sqlContext.xml"/>
 
-    <context:property-placeholder location="classpath:com/dummy/myerp/consumer/dbmyerp.properties"/>
 
 
 </beans>
