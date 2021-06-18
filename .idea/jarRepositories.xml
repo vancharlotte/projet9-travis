@@ -2,6 +2,11 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="project.local" />
+      <option name="name" value="project.local" />
+      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9\src\myerp-consumer/../src/lib/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
@@ -9,17 +14,12 @@
     <remote-repository>
       <option name="id" value="project.local" />
       <option name="name" value="project.local" />
-      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9-gitlab\src\myerp-technical/../src/lib/" />
+      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9\src/../src/lib/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="project.local" />
-      <option name="name" value="project.local" />
-      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9-gitlab\src/../src/lib/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss.community" />
@@ -29,17 +29,17 @@
     <remote-repository>
       <option name="id" value="project.local" />
       <option name="name" value="project.local" />
-      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9-gitlab\src\myerp-model/../src/lib/" />
+      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9\src\myerp-model/../src/lib/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="project.local" />
       <option name="name" value="project.local" />
-      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9-gitlab\src\myerp-business/../src/lib/" />
+      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9\src\myerp-technical/../src/lib/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="project.local" />
       <option name="name" value="project.local" />
-      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9-gitlab\src\myerp-consumer/../src/lib/" />
+      <option name="url" value="file://C:\Users\vanhu\Documents\workspace\projet9\src\myerp-business/../src/lib/" />
     </remote-repository>
   </component>
 </project>

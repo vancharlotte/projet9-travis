@@ -1,24 +1,22 @@
 package com.dummy.myerp.business.impl.manager;
 
-
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
-import com.dummy.myerp.testbusiness.business.BusinessTestCase;
 import com.dummy.myerp.testbusiness.business.SpringRegistry;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//class de test basé sur la BDD demo disponible dans docker
-public class ComptabiliteManagerImplIT extends BusinessTestCase {
+
+//classe de test basée sur la BDD demo disponible dans docker
+public class ComptabiliteManagerImplIT  {
 
     private static final Logger logger = LoggerFactory.getLogger(ComptabiliteManagerImplIT.class);
 
@@ -107,9 +105,10 @@ public class ComptabiliteManagerImplIT extends BusinessTestCase {
 
         // reinitialisation du champ
         nEC.setLibelle(precedentLibelle);
-        getBusinessProxy().getComptabiliteManager().updateEcritureComptable(nEC);
+        manager.updateEcritureComptable(nEC);
 
     }
 
 
 }
+
