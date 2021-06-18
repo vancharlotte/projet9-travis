@@ -9,5 +9,5 @@
 /*-*/.checkstyle
 /*-*/.springBeans
 
-/.idea
+.idea
 *.iml

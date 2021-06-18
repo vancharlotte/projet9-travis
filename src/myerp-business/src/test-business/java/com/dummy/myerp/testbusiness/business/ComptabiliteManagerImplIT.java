@@ -13,8 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ComptabiliteManagerImplIT {
 
@@ -47,7 +46,7 @@ public class ComptabiliteManagerImplIT {
         assertNotNull(listeEcritureComptableTest.size());
     }
 
-    /*
+
     @Test
     public void getEcritureComptableTest() throws FunctionalException {
         EcritureComptable nEC = new EcritureComptable();
@@ -55,7 +54,7 @@ public class ComptabiliteManagerImplIT {
         nEC.setReference("AC-2016/00001");
         EcritureComptable fEC =  manager.getEcritureComptable(nEC.getId());
         assertEquals("AC-2016/00001",fEC.getReference());
-    }*/
+    }
 
 
     //expected throw exception when checkEcritureComptable
@@ -73,11 +72,17 @@ public class ComptabiliteManagerImplIT {
 
     @Test
     public void insertEcritureComptableTest() throws FunctionalException {
-        EcritureComptable nEC = new EcritureComptable();
-        nEC.setId(-1);
-        nEC.setReference("AA-2021/00001");
-        nEC.setJournal(new JournalComptable("AA","Achat"));
+      /*  EcritureComptable nEC = new EcritureComptable();
+        nEC.setId(1);
+        nEC.setDate();
+        nEC.setReference("BB-2021/00001");
+        nEC.setJournal(new JournalComptable("BB","insert test"));
         manager.insertEcritureComptable(nEC);
+
+        assertNotNull(manager.getEcritureComptable(1));
+
+        manager.deleteEcritureComptable(nEC.getId());
+*/
 
     }
 
@@ -92,7 +97,7 @@ public class ComptabiliteManagerImplIT {
 
     }
 
-    /*
+
     @Test
     public void updateEcritureComptableTest() throws FunctionalException {
         EcritureComptable nEC = new EcritureComptable();
@@ -108,6 +113,6 @@ public class ComptabiliteManagerImplIT {
         nEC.setLibelle(precedentLibelle);
         manager.updateEcritureComptable(nEC);
 
-    }*/
+    }
 
 }
