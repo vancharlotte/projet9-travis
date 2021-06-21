@@ -1,20 +1,20 @@
 package com.dummy.myerp.business.impl.manager;
 
+import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
+import com.dummy.myerp.business.impl.AbstractBusinessManager;
+import com.dummy.myerp.model.bean.comptabilite.*;
+import com.dummy.myerp.technical.exception.FunctionalException;
+import com.dummy.myerp.technical.exception.NotFoundException;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.TransactionStatus;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import com.dummy.myerp.model.bean.comptabilite.*;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.transaction.TransactionStatus;
-import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
-import com.dummy.myerp.business.impl.AbstractBusinessManager;
-import com.dummy.myerp.technical.exception.FunctionalException;
-import com.dummy.myerp.technical.exception.NotFoundException;
 
 
 /**
