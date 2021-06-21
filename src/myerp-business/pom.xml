@@ -160,10 +160,7 @@
                 </plugins>
                 <testResources>
                     <testResource>
-                        <directory>src/test/resources</directory>
-                    </testResource>
-                    <testResource>
-                        <directory>src/test-business/resources</directory>
+                        <directory>src/test-business/java</directory>
                     </testResource>
                 </testResources>
             </build>
