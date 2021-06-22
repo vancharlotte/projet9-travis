@@ -4,7 +4,6 @@ stages:
 
 cache:
   paths:
-    - .m2/repository/
 
 
 build-bdd:

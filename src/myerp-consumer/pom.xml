@@ -168,7 +168,7 @@
                     <!-- create report during maven verify phase -->
                     <execution>
                         <id>report</id>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>

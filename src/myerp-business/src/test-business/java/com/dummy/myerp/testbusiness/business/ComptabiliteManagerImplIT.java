@@ -15,9 +15,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ComptabiliteManagerImplIntegrationTest extends BusinessTestCase {
+public class ComptabiliteManagerImplIT extends BusinessTestCase {
 
-    private static final Logger logger = LoggerFactory.getLogger(ComptabiliteManagerImplIntegrationTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComptabiliteManagerImplIT.class);
 
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 
