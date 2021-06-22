@@ -143,7 +143,6 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>1.10</version>
                         <executions>
                             <execution>
                                 <id>add-test-source</id>
@@ -161,6 +160,9 @@
                     </plugin>
                 </plugins>
                 <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
                     <testResource>
                         <directory>src/test-business/java</directory>
                     </testResource>
