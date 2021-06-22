@@ -37,6 +37,9 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/../myerp-model/target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
@@ -44,7 +47,7 @@
     <!-- Dependencies -->
     <!-- =============================================================== -->
     <dependencies>
-    <!-- ===== Modules ===== -->
+        <!-- ===== Modules ===== -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>myerp-technical</artifactId>
@@ -93,5 +96,31 @@
     <!-- Build -->
     <!-- =============================================================== -->
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <!-- to avoid bugs in some situations -->
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- create report during maven verify phase -->
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
     </build>
 </project>

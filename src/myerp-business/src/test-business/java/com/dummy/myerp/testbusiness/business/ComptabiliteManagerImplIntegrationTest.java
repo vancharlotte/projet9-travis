@@ -15,9 +15,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ComptabiliteManagerImplIT {
+public class ComptabiliteManagerImplIntegrationTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ComptabiliteManagerImplIT.class);
+    private static final Logger logger = LoggerFactory.getLogger(ComptabiliteManagerImplIntegrationTest.class);
 
     private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 

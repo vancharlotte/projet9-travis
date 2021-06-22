@@ -55,10 +55,16 @@
         <spring.version>4.3.7.RELEASE</spring.version>
 
         <sonar.host.url>http://localhost:9000</sonar.host.url>
-        <sonar.language>java</sonar.language>
+        <!-- Sonar -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.coverage.jacoco.xmlReportPaths>../myerp/target/site/jacoco-aggregate/jacoco.xml;../myerp/target/site/jacoco</sonar.coverage.jacoco.xmlReportPaths>
-
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.login>856de325ea0df9dd76ad57017823ce9ce2bb695a</sonar.login>
+        <sonar.language>java</sonar.language>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/../myerp-business/target/site/jacoco-aggregate/jacoco.xml,
+            ${project.basedir}/../myerp-consumer/target/site/jacoco-aggregate/jacoco.xml,
+            ${project.basedir}/../myerp-model/target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
@@ -70,6 +76,7 @@
         <module>myerp-model</module>
         <module>myerp-consumer</module>
         <module>myerp-business</module>
+
     </modules>
 
 
@@ -418,25 +425,8 @@
                 </plugin>
 
                 <!-- jacaco -->
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.5</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>report</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+
+
 
             </plugins>
         </pluginManagement>

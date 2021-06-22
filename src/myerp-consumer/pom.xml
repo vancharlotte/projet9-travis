@@ -36,6 +36,9 @@
     <!-- Properties -->
     <!-- =============================================================== -->
     <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/../myerp-consumer/target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
 
@@ -127,7 +130,7 @@
                                 </goals>
                                 <configuration>
                                     <sources>
-                                        <source>src/test-consumer/java</source>
+                                        <source>src/test/java</source>
                                     </sources>
                                 </configuration>
                             </execution>
@@ -137,9 +140,6 @@
                 <testResources>
                     <testResource>
                         <directory>src/test/resources</directory>
-                    </testResource>
-                    <testResource>
-                        <directory>src/test-consumer/resources</directory>
                     </testResource>
                 </testResources>
             </build>
@@ -151,5 +151,30 @@
     <!-- Build -->
     <!-- =============================================================== -->
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <!-- to avoid bugs in some situations -->
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- create report during maven verify phase -->
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
