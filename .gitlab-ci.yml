@@ -16,20 +16,18 @@ build-job:
     - echo \" BUILD\"
     - mvn compile -f src
 
-
 test-business:
-  services:
-  - docker:latest
-  - docker/compose:latest
-
   image:  maven:3.6.3-openjdk-8
   stage: test
-  script:
+services:
+  - docker:dind    
+script:
+    - echo \" BUILD BDD\"
     - cd docker/dev
-    - docker version
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
     - docker-compose version
     - docker-compose up -d
-    - apk add --no-cache docker-compose
     - echo \" TEST-BUSINESS\"
     - mvn verify -f src -P test-business
 
