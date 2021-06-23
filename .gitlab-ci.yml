@@ -16,6 +16,9 @@ build-bdd:
     - cd docker/dev
     - apk add --no-cache docker-compose
     - docker-compose up -d
+  artifacts:
+    paths :
+      - myerp-database
     
 build-job:
   image:  maven:3.6.3-openjdk-8
@@ -30,6 +33,7 @@ test-business:
   stage: test
   script:
     - echo \" TEST-BUSINESS\"
+    - cat myerp-database
     - mvn  verify -f src -P test-business
 
 test-consumer:
