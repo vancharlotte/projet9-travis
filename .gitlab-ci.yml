@@ -1,5 +1,3 @@
-image:  docker/latest
- 
 stages:
   - build
   - test
@@ -7,6 +5,17 @@ stages:
 cache:
   paths:
 
+
+build-bdd:
+  image: docker:latest
+  stage: build
+  services:
+  - docker:dind    
+  script:
+    - echo \" BUILD BDD\"
+    - cd docker/dev
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
     
 build-job:
   image:  maven:3.6.3-openjdk-8
@@ -15,21 +24,18 @@ build-job:
     - echo \" BUILD\"
     - mvn compile -f src
 
+
 test-business:
   image:  maven:3.6.3-openjdk-8
-  services:
-  - docker:dind 
   stage: test
   script:
-    - cd docker/dev
-    - apk add --no-cache docker-compose
-    - docker-compose up -d
+    - docker-compose -version
     - echo \" TEST-BUSINESS\"
-    - mvn verify -f src -P test-business
+    - mvn  verify -f src -P test-business
 
 test-consumer:
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
     - echo \" TEST-CONSUMER\"
-    - mvn test -f src -P test-consumer
+    - mvn verify -f src -P test-consumer
