@@ -6,16 +6,8 @@ cache:
   paths:
 
 
-build-bdd:
-  image: docker:latest
-  stage: build
-  services:
-  - docker:dind    
-  script:
-    - echo \" BUILD BDD\"
-    - cd docker/dev
-    - apk add --no-cache docker-compose
-    - docker-compose up -d
+
+
     
 build-job:
   image:  maven:3.6.3-openjdk-8
@@ -33,6 +25,7 @@ test-business:
   script:
     - cd docker/dev
     - docker-compose up -d
+    - apk add --no-cache docker-compose
     - echo \" TEST-BUSINESS\"
     - mvn verify -f src -P test-business
 
