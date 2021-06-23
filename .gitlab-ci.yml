@@ -14,7 +14,6 @@ build-bdd:
   script:
     - echo \" BUILD BDD\"
     - cd docker/dev
-    - apk add --no-cache docker-compose
     - docker-compose up -d
     
 build-job:
