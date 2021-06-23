@@ -30,11 +30,11 @@ test-business:
   stage: test
   script:
     - echo \" TEST-BUSINESS\"
-    - mvn  verify -f src -P test-business
+    - mvn test -f src -P test-business
 
 test-consumer:
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
     - echo \" TEST-CONSUMER\"
-    - mvn verify -f src -P test-consumer
+    - mvn test -f src -P test-consumer
