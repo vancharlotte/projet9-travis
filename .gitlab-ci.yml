@@ -5,7 +5,7 @@ services:
 
 before_script:
 - cd docker/dev
-- apk add --update python py-pip python-dev && pip install docker-compose # install docker-compose
+- apk add docker-compose
 - docker-compose up -d
 
 stages:
