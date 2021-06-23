@@ -1,12 +1,12 @@
+image:  docker/latest
+services:
+  - docker:dind 
 stages:
   - build
   - test
 
 cache:
   paths:
-
-
-
 
     
 build-job:
@@ -19,14 +19,9 @@ build-job:
 test-business:
   image:  maven:3.6.3-openjdk-8
   stage: test
-services:
-  - docker:dind    
-script:
-    - echo \" BUILD BDD\"
+  script:
     - cd docker/dev
     - apk add --no-cache docker-compose
-    - docker-compose up -d
-    - docker-compose version
     - docker-compose up -d
     - echo \" TEST-BUSINESS\"
     - mvn verify -f src -P test-business
