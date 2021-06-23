@@ -8,7 +8,7 @@ cache:
 
 build-bdd:
   image: docker:latest
-  stage: build
+  stage: test
   services:
   - docker:dind    
   script:
@@ -29,7 +29,6 @@ test-business:
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
-    - docker-compose -version
     - echo \" TEST-BUSINESS\"
     - mvn  verify -f src -P test-business
 
