@@ -19,6 +19,7 @@ build-job:
 
 test-business:
   services:
+  - docker:latest
   - docker/compose:latest
 
   image:  maven:3.6.3-openjdk-8
