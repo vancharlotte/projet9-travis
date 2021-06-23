@@ -16,19 +16,7 @@ cache:
   paths:
     - .m2/repository
 
-build-bdd:
-  image: docker:latest
-  stage: build
-  services:
-  - docker:dind    
-  script:
-    - echo \" BUILD BDD\"
-    - cd docker/dev
-    - apk add --no-cache docker-compose
-    - docker-compose up -d
-  artifacts:
-    paths :
-      - myerp-database.gz
+
     
 build-job:
   image:  maven:3.6.3-openjdk-8
