@@ -14,6 +14,7 @@ build-bdd:
   script:
     - echo \" BUILD BDD\"
     - cd docker/dev
+    - apk add --no-cache docker-compose
     - docker-compose up -d
     
 build-job:
@@ -31,7 +32,6 @@ test-business:
   stage: test
   script:
     - cd docker/dev
-    - apk add --no-cache docker-compose
     - docker-compose up -d
     - echo \" TEST-BUSINESS\"
     - mvn verify -f src -P test-business
