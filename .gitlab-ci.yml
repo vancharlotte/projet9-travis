@@ -4,7 +4,6 @@ stages:
 
 cache:
   paths:
-    - .m2/repository/
 
 
 build-bdd:
@@ -31,11 +30,11 @@ test-business:
   stage: test
   script:
     - echo \" TEST-BUSINESS\"
-    - mvn verify -f src sonar:sonar -P test-business
+    - mvn clean verify -f src sonar:sonar -P test-business
 
 test-consumer:
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
     - echo \" TEST-CONSUMER\"
-    - mvn verify -f src sonar:sonar -P test-consumer
+    - mvn clean verify -f src sonar:sonar -P test-consumer
