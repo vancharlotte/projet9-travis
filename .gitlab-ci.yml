@@ -20,7 +20,7 @@ build-job:
 test-business:
   services:
   - docker/compose:latest
-  - docker:dind 
+  - docker:latest
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
