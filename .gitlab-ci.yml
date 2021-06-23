@@ -1,3 +1,13 @@
+image: docker:latest
+
+services:
+- docker:dind
+
+before_script:
+- cd docker/dev
+- apk add --update python py-pip python-dev && pip install docker-compose # install docker-compose
+- docker-compose up -d
+
 stages:
   - build
   - test
