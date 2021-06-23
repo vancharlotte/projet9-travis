@@ -8,7 +8,7 @@ cache:
 
 build-bdd:
   image: docker:latest
-  stage: test
+  stage: build
   services:
   - docker:dind    
   script:
@@ -18,7 +18,7 @@ build-bdd:
     - docker-compose up -d
   artifacts:
     paths :
-      - myerp-database.txt
+      - myerp-database
     
 build-job:
   image:  maven:3.6.3-openjdk-8
