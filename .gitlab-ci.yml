@@ -29,8 +29,11 @@ test-business:
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
+    - cd docker/dev
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
     - echo \" TEST-BUSINESS\"
-    - mvn test -f src -P test-business
+    - mvn verify -f src -P test-business
 
 test-consumer:
   image:  maven:3.6.3-openjdk-8
