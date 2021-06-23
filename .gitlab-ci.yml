@@ -19,12 +19,14 @@ build-job:
 
 test-business:
   services:
-  - docker:latest
+  - docker/compose:latest
   - docker:dind 
   image:  maven:3.6.3-openjdk-8
   stage: test
   script:
     - cd docker/dev
+    - docker version
+    - docker-compose version
     - docker-compose up -d
     - apk add --no-cache docker-compose
     - echo \" TEST-BUSINESS\"
