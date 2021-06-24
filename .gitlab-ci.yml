@@ -33,9 +33,8 @@ test-business:
     - echo \- TEST-BUSINESS\"
     - cd docker/dev
     - docker-compose up -d
-    - cd..
-    - cd..
-    - mvn  verify -f src -P test-business
+    - cd ../../src
+    - mvn verify -P test-business
 
 test-consumer:
   image:  maven:3.6.3-openjdk-8
