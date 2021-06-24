@@ -10,7 +10,7 @@ cache:
     - .m2/repository
 
 
-before-script:
+before_script:
     - cd docker/dev
     - apk add --no-cache docker-compose
     - docker-compose up -d
