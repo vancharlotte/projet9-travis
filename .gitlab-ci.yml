@@ -25,13 +25,12 @@ build-job:
 
 
 test-business:
-  image: jtim/docker-docker-compose-jdk:20.10.2-compose-1.28.0-openjdk-8u252 
   stage: test
   services :
     - docker:dind
   script:
     - echo \- TEST-BUSINESS\"
-    - docker/dev
+    - cd docker/dev
     - docker-compose up -d
     - cd..
     - cd..
