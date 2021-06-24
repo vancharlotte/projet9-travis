@@ -20,16 +20,21 @@ build-job:
   image:  docker
   stage: build
   script:
-    - echo \" BUILD\"
+    - echo \" upILD\"
     - mvn compile -f src
 
 
 test-business:
   image: jtim/docker-docker-compose-jdk-mvn:18.09.1-ce-git-compose-1.23.1-openjdk-8u191-maven-3.6.0 
   stage: test
+  services :
+    - docker:dind
   script:
-    - echo \" TEST-BUSINESS\"
-    - cat myerp-database.gz
+    - echo \- TEST-BUSINESS\"
+    - docker/dev
+    - docker-compose up -d
+T    - cd..
+    - cd..
     - mvn  verify -f src -P test-business
 
 test-consumer:
