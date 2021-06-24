@@ -54,18 +54,22 @@
         <log4j.version>2.8.1</log4j.version>
         <spring.version>4.3.7.RELEASE</spring.version>
 
-        <sonar.host.url>http://localhost:9000</sonar.host.url>
         <!-- Sonar -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.login>856de325ea0df9dd76ad57017823ce9ce2bb695a</sonar.login>
         <sonar.language>java</sonar.language>
+        <sonar.projectKey>vancharlotte_projet9-gitlab</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <sonar.organization>vancharlotte</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <!-- <sonar.login>791155cb746dcaed7e8c2b389f083f3c8718e859</sonar.login> -->
+     <sonarcloud.token>bdb4db287dda7ddd4330146e3b61a32b1156be8b </sonarcloud.token>
 
 
-    </properties>
+ </properties>
 
 
-    <!-- =============================================================== -->
+ <!-- =============================================================== -->
     <!-- Modules -->
     <!-- =============================================================== -->
     <modules>
@@ -428,6 +432,7 @@
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.9.0.2155</version>
                 </plugin>
+
 
                 <!-- jacaco -->
                 <plugin>
