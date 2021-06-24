@@ -1,3 +1,6 @@
+image: docker:latest
+services: 
+    - docker:dind
 stages:
   - build
   - test
@@ -6,12 +9,8 @@ cache:
   paths:
     - .m2/repository
 
-build-bdd:
-  image: docker:latest
-  services: 
-    - docker:dind
-  stage: build
-  script:
+
+before-script:
     - cd docker/dev
     - apk add --no-cache docker-compose
     - docker-compose up -d
@@ -27,15 +26,8 @@ build-job:
 test-business:
   image: jtim/docker-docker-compose-jdk-mvn:18.09.1-ce-git-compose-1.23.1-openjdk-8u191-maven-3.6.0
   stage: test
-  services :
-    - docker:dind
-    - postgres:​latest
   script:
-    - echo \- BUILD-BDD\"
-    - cd docker/dev
-    - docker-compose up -d
     - echo \- TEST-BUSINESS\"
-    - cd ../../src
     - mvn verify -P test-business
 
 test-consumer:
