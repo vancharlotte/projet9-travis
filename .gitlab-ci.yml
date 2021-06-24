@@ -31,10 +31,10 @@ test-business:
     - docker:dind
     - postgres:​latest
   script:
-    - echo \- TEST-BUSINESS\"
+    - echo \- BUILD-BDD\"
     - cd docker/dev
     - docker-compose up -d
-    - netstat -ano
+    - echo \- TEST-BUSINESS\"
     - cd ../../src
     - mvn verify -P test-business
 
