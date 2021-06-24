@@ -13,18 +13,19 @@ build-bdd:
   stage: build
   script:
     - cd docker/dev
-    - apk add docker-compose
+    - apk add --no-cache docker-compose
     - docker-compose up -d
     
 build-job:
   image: maven:3.6.3-openjdk-8
   stage: build
   script:
-    - echo \" upILD\"
+    - echo \" BUILD\"
     - mvn compile -f src
 
 
 test-business:
+  image: jtim/docker-docker-compose-jdk-mvn:18.09.1-ce-git-compose-1.23.1-openjdk-8u191-maven-3.6.0
   stage: test
   services :
     - docker:dind
