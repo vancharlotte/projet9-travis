@@ -25,7 +25,7 @@ build-job:
 
 
 test-business:
-  image:  maven:3.6.3-openjdk-8
+  image: jtim/docker-docker-compose-jdk-mvn:18.09.1-ce-git-compose-1.23.1-openjdk-8u191-maven-3.6.0 
   stage: test
   script:
     - echo \" TEST-BUSINESS\"
