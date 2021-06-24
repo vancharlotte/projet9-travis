@@ -1,21 +1,16 @@
-stages:
-  - build
-  - test
+variables:
+  POSTGRES_DB: db_myerp
+  POSTGRES_USER: usr_myerp
+  POSTGRES_PASSWORD: myerp
 
 cache:
   paths:
+    - /root/.m2/repository
 
-
-build-bdd:
-  image: docker:latest
-  stage: build
-  services:
-  - docker:dind    
-  script:
-    - echo \" BUILD BDD\"
-    - cd docker/dev
-    - apk add --no-cache docker-compose
-    - docker-compose up -d
+stages:
+  - build
+  - test
+  
     
 build-job:
   image:  maven:3.6.3-openjdk-8
@@ -27,6 +22,8 @@ build-job:
 
 test-business:
   image:  maven:3.6.3-openjdk-8
+  services:
+    - postgres:9.6
   stage: test
   script:
     - echo \" TEST-BUSINESS\"
@@ -34,6 +31,8 @@ test-business:
 
 test-consumer:
   image:  maven:3.6.3-openjdk-8
+  services:
+    - postgres:9.6
   stage: test
   script:
     - echo \" TEST-CONSUMER\"
