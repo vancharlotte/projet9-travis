@@ -29,10 +29,12 @@ test-business:
   stage: test
   services :
     - docker:dind
+    - postgres:​latest
   script:
     - echo \- TEST-BUSINESS\"
     - cd docker/dev
     - docker-compose up -d
+    - netstat -ano
     - cd ../../src
     - mvn verify -P test-business
 
