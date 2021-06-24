@@ -1,4 +1,4 @@
-image: docker:latest
+image: jtim/docker-docker-compose-jdk-mvn:18.09.1-ce-git-compose-1.23.1-openjdk-8u191-maven-3.6.0
 services: 
     - docker:dind
 stages:
@@ -16,7 +16,6 @@ before_script:
     - docker-compose up -d
     
 build-job:
-  image: maven:3.6.3-openjdk-8
   stage: build
   script:
     - echo \" BUILD\"
@@ -24,14 +23,12 @@ build-job:
 
 
 test-business:
-  image: jtim/docker-docker-compose-jdk-mvn:18.09.1-ce-git-compose-1.23.1-openjdk-8u191-maven-3.6.0
   stage: test
   script:
     - echo \- TEST-BUSINESS\"
     - mvn verify -P test-business
 
 test-consumer:
-  image:  maven:3.6.3-openjdk-8
   stage: test
   script:
     - echo \" TEST-CONSUMER\"
