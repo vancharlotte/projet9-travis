@@ -8,8 +8,7 @@ services:
 addons:
   sonarcloud:
     organization: "vancharlotte" 
-    login:
-      secure : "travis encrypt 791155cb746dcaed7e8c2b389f083f3c8718e859"  
+    login: "travis encrypt 791155cb746dcaed7e8c2b389f083f3c8718e859"  
 
 
 before_script:
