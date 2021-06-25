@@ -13,5 +13,5 @@ before_script:
 
 script:
   - mvn compile -f src
-  - mvn verify -f src sonar:sonar -P test-business -Dsonar.login=$SONAR_TOKEN
-  - mvn verify -f src sonar:sonar -P test-consumer -Dsonar.login=$SONAR_TOKEN
+  - mvn verify -f src sonar:sonar -P test-business -Dsonar.login=791155cb746dcaed7e8c2b389f083f3c8718e859
+  - mvn verify -f src sonar:sonar -P test-consumer -Dsonar.login=791155cb746dcaed7e8c2b389f083f3c8718e859
