@@ -1,0 +1,24 @@
+language: java
+
+dist: xenial
+
+services:
+  - docker
+  
+addons:
+  sonarcloud:
+    organization: "vancharlotte" 
+    login:
+      secure : "travis encrypt 791155cb746dcaed7e8c2b389f083f3c8718e859"  
+
+
+before_script:
+  - cd docker/dev
+  - docker-compose up -d 
+  - cd ../..
+
+script:
+  - mvn compile -f src
+  - mvn verify -f src sonar:sonar -P test-business 
+  - mvn verify -f src sonar:sonar -P test-consumer 
+  
