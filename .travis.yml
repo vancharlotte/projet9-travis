@@ -7,7 +7,7 @@ services:
 
 addons:
   sonarcloud:
-    organization: "vancharlotte"
+    organization: "vancharlottegroup"
     login:
       secure : "travis encrypt 791155cb746dcaed7e8c2b389f083f3c8718e859"
 
