@@ -233,58 +233,5 @@ public class ComptabiliteManagerImplTest {
 
     }
 
- //   @Test
-    public void getEcritureComptableTest() throws FunctionalException {
-     /*   SpringRegistry.init();
-        EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setReference("AC-2016/00001");
-        vEcritureComptable.setId(-1);
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle");
-        assertNotNull(manager.getEcritureComptable(vEcritureComptable.getId()));*/
-    }
 
-   // @Test
-    public void insertEcritureComptableTest() throws FunctionalException {
-     /*   EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
-        vEcritureComptable.setReference("AC-2016/00001");
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle");
-        System.out.println(vEcritureComptable.getReference());
-        manager.insertEcritureComptable(vEcritureComptable);*/
-       /* EcritureComptable eb =
-                getDaoProxy().getComptabiliteDao()
-                        .getEcritureComptableByRef("BB-2021/00001");
-        Assert.assertEquals("BB-2021/00001", eb.getReference());
-        manager.deleteEcritureComptable(eb.getId());*/
-    }
-
-    //@Test
-    public void updateEcritureComptableTest() throws FunctionalException, NotFoundException {
-       /* EcritureComptable vEcritureComptable;
-        vEcritureComptable = new EcritureComptable();
-        vEcritureComptable.setJournal(new JournalComptable("AA", "Achat"));
-        vEcritureComptable.setReference("AA-"+ Calendar.getInstance().get(Calendar.YEAR) +"/00001");
-        vEcritureComptable.setId(-1);
-        vEcritureComptable.setDate(new Date());
-        vEcritureComptable.setLibelle("Libelle");
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, new BigDecimal(123),
-                null));
-        vEcritureComptable.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, null, new BigDecimal(123)));
-
-        System.out.println(vEcritureComptable.getReference());
-        manager.updateEcritureComptable(vEcritureComptable);
-        */
-
-    }
-
-    public void deleteEcritureComptableTest(){
-
-    }
 }

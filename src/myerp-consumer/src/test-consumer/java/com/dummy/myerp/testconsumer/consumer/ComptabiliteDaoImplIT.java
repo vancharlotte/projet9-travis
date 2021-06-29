@@ -1,17 +1,18 @@
 package com.dummy.myerp.testconsumer.consumer;
 
 import com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl;
-import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
-import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
-import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
+import com.dummy.myerp.model.bean.comptabilite.*;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -111,25 +112,73 @@ public class ComptabiliteDaoImplIT {
     }
 
     @Test
-    public void loadListLigneEcritureTest(){}
+    public void loadListLigneEcritureTest() throws NotFoundException {
+        List<EcritureComptable> listEC = dao.getListEcritureComptable();
+        Map<Integer,List<LigneEcritureComptable>> listLEC = new HashMap<>();
+        EcritureComptable newEC = new EcritureComptable();
+
+        for (EcritureComptable e: listEC) {
+            listLEC.put(e.getId(),e.getListLigneEcriture());
+        }
+
+        listLEC.forEach((ecritureId,list) -> {
+            newEC.setId(ecritureId);
+            dao.loadListLigneEcriture(newEC);
+            assertEquals(newEC.getListLigneEcriture().size(),list.size());
+        });
+
+    }
+
 
     @Test
-    public void insertListLigneEcritureComptable(){}
-
-
-    @Test
-    public void deleteListLigneEcritureComptable(){}
+    public void getSequenceEcritureComptableByCodeAndYear_Null(){
+        assertNull(dao.getSequenceEcritureComptableByCodeAndYear("ZZ",2200));
+    }
 
     @Test
-    public void getSequenceEcritureComptableByCodeAndYear(){}
+    public void getSequenceEcritureComptableByCodeAndYear_NotNull(){
+        assertNotNull(dao.getSequenceEcritureComptableByCodeAndYear("AC",2016));
+    }
 
     @Test
-    public void updateSequenceEcritureComptable(){}
+    public void updateSequenceEcritureComptable(){
+        SequenceEcritureComptable newSEC = new SequenceEcritureComptable();
+        newSEC = dao.getSequenceEcritureComptableByCodeAndYear("AC", 2016);
+        int oldValue = newSEC.getDerniereValeur();
+
+        newSEC.setDerniereValeur(123);
+        dao.updateSequenceEcritureComptable(newSEC);
+        assertEquals(newSEC.getDerniereValeur(),123);
+
+        newSEC.setDerniereValeur(oldValue);
+        dao.updateSequenceEcritureComptable(newSEC);
+        assertEquals(newSEC.getDerniereValeur(),oldValue);
+
+    }
 
     @Test
-    public void insertSequenceEcritureComptable(){}
+    public void insertSequenceEcritureComptable(){
+        SequenceEcritureComptable newSEC= new SequenceEcritureComptable();
+        newSEC.setCodeJournal("AC");
+        newSEC.setAnnee(2020);
+        newSEC.setDerniereValeur(0);
+
+        dao.insertSequenceEcritureComptable(newSEC);
+        assertNotNull(dao.getSequenceEcritureComptableByCodeAndYear("AC",2020));
+
+        dao.deleteSequenceEcritureComptable(dao.getSequenceEcritureComptableByCodeAndYear("AC",2020));
+    }
 
     @Test
-    public void deleteSequenceEcritureComptable(){}
+    public void deleteSequenceEcritureComptable(){
+        SequenceEcritureComptable newSEC= new SequenceEcritureComptable();
+        newSEC.setCodeJournal("AC");
+        newSEC.setAnnee(2020);
+        newSEC.setDerniereValeur(1);
+        dao.insertSequenceEcritureComptable(newSEC);
+        dao.deleteSequenceEcritureComptable(newSEC);
+        assertNull(dao.getSequenceEcritureComptableByCodeAndYear("AC",2020));
+
+    }
 
 }
