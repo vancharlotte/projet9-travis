@@ -2,6 +2,7 @@ package com.dummy.myerp.model.bean.comptabilite;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -56,7 +57,12 @@ public class EcritureComptableTest {
     public void isEquilibree() {
         EcritureComptable vEcriture;
         vEcriture = new EcritureComptable();
+        vEcriture.setId(1);
+        vEcriture.setJournal(new JournalComptable("AC", "Achat"));
+        vEcriture.setDate(new Date());
+        vEcriture.setReference("AC-2020/00001");
         vEcriture.setLibelle("Equilibrée");
+
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
         vEcriture.getListLigneEcriture().add(this.createLigne(1, "100.50", "33"));
         vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "301"));

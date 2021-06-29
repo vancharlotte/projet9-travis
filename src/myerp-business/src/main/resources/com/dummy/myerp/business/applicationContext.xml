@@ -5,6 +5,9 @@
                            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
 
+    <import resource="classpath:/com/dummy/myerp/consumer/applicationContext.xml"/>
+    <import resource="classpath:/com/dummy/myerp/model/applicationContext.xml"/>
+    <import resource="classpath:/com/dummy/myerp/technical/applicationContext.xml"/>
 
 
     <!-- ====================   Business-Proxy   ==================== -->

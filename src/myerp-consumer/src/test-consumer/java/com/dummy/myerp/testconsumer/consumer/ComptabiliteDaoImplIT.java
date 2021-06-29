@@ -4,13 +4,13 @@ import com.dummy.myerp.consumer.dao.impl.db.dao.ComptabiliteDaoImpl;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
-import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,22 +60,25 @@ public class ComptabiliteDaoImplIT {
     }
 
     @Test
-    public void getEcritureComptableByRefTest_Notfound() throws NotFoundException {
-        EcritureComptable newEC = dao.getEcritureComptableByRef("AC-2021/00001");
-        Exception exception = assertThrows(FunctionalException.class, () -> dao.updateEcritureComptable(newEC));
+    public void getEcritureComptableByRefTest_Notfound() {
+        EcritureComptable newEC = null;
+        Exception exception = assertThrows(NotFoundException.class, () -> dao.getEcritureComptableByRef("AC-2021/00001"));
         logger.info(exception.getMessage());
+
     }
 
     @Test
     public void insertEcritureComptable(){
         List<EcritureComptable> listEC =  dao.getListEcritureComptable();
         EcritureComptable newEC = new EcritureComptable();
-        newEC.setId(1);
+        newEC.setLibelle("test");
+        newEC.setDate(new Date());
+        newEC.setJournal(new JournalComptable("AC", "Achat"));
         newEC.setReference("BB-2021/00001");
-        newEC.setJournal(new JournalComptable("BB","Test"));
+        newEC.setJournal(new JournalComptable("AC", "Achat"));
         dao.insertEcritureComptable(newEC);
         assertEquals((listEC.size()+1),dao.getListEcritureComptable().size());
-        dao.deleteEcritureComptable(1);
+        dao.deleteEcritureComptable(newEC.getId());
     }
 
     @Test
@@ -94,14 +97,15 @@ public class ComptabiliteDaoImplIT {
     }
 
     @Test
-    public void deleteEcritureComptable(){
+    public void deleteEcritureComptable() throws NotFoundException {
         EcritureComptable newEC = new EcritureComptable();
-        newEC.setId(1);
+        newEC.setLibelle("test");
+        newEC.setDate(new Date());
+        newEC.setJournal(new JournalComptable("AC", "Achat"));
         newEC.setReference("BB-2021/00001");
-        newEC.setJournal(new JournalComptable("BB","Test"));
         dao.insertEcritureComptable(newEC);
         List<EcritureComptable> listEC =  dao.getListEcritureComptable();
-        dao.deleteEcritureComptable(1);
+        dao.deleteEcritureComptable(newEC.getId());
         assertEquals((listEC.size()-1),dao.getListEcritureComptable().size());
 
     }

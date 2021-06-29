@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 import com.dummy.myerp.model.validation.constraint.MontantComptable;
 
 
+
 /**
  * Bean représentant une Ligne d'écriture comptable.
  */
