@@ -58,12 +58,11 @@
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.language>java</sonar.language>
-        <sonar.projectKey>vancharlotte_projet9-gitlab</sonar.projectKey>
+        <sonar.projectKey>vancharlotte_projet9_gitlab</sonar.projectKey>
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.organization>vancharlotte</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <!-- <sonar.login>791155cb746dcaed7e8c2b389f083f3c8718e859</sonar.login> -->
-     <sonarcloud.token>bdb4db287dda7ddd4330146e3b61a32b1156be8b </sonarcloud.token>
+    <!-- <sonar.login>d822f9f5c03372f73356aef9cc9207a02519278b</sonar.login> -->
 
 
  </properties>
