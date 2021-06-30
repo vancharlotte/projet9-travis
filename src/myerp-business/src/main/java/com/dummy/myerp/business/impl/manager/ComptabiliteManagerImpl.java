@@ -86,7 +86,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         if (sEC!=null){
             sEC.setDerniereValeur(sEC.getDerniereValeur()+1);
-
         } else {
             sEC = new SequenceEcritureComptable();
             sEC.setCodeJournal(codeSequence);
@@ -153,10 +152,12 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         for (LigneEcritureComptable vLigneEcritureComptable : pEcritureComptable.getListLigneEcriture()) {
             if (BigDecimal.ZERO.compareTo(ObjectUtils.defaultIfNull(vLigneEcritureComptable.getCredit(),
                                                                     BigDecimal.ZERO)) != 0) {
+
                 vNbrCredit++;
             }
             if (BigDecimal.ZERO.compareTo(ObjectUtils.defaultIfNull(vLigneEcritureComptable.getDebit(),
                                                                     BigDecimal.ZERO)) != 0) {
+
                 vNbrDebit++;
             }
         }
@@ -165,7 +166,9 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
         if (pEcritureComptable.getListLigneEcriture().size() < 2
             || vNbrCredit < 1
             || vNbrDebit < 1) {
+
             throw new FunctionalException(
+
                 "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
         }
 
@@ -188,12 +191,14 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         //verifier que le code dans la ref = le code du journal
         if(!codeJournal.equals(pEcritureComptable.getJournal().getCode())){
+
             throw new FunctionalException(
                     "Le code journal de la référence est différent du code journal.");
         }
 
         //vérifier que l'année dans la ref = l'année de l'écriture
         if(Integer.parseInt(date)!= calendar.get(Calendar.YEAR)){
+
             throw new FunctionalException(
                     "La date de la référence ne correspond pas à l'année d'écriture.");
         }
@@ -221,7 +226,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
                 // c'est qu'il y a déjà une autre écriture avec la même référence
                 if (pEcritureComptable.getId() == null
                     || !pEcritureComptable.getId().equals(vECRef.getId())) {
-                    System.out.println(pEcritureComptable.getId() +" = "+vECRef.getId());
                     throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
                 }
             } catch (NotFoundException vEx) {
