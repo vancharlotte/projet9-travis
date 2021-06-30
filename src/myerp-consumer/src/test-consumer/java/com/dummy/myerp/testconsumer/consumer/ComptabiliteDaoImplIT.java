@@ -30,20 +30,20 @@ public class ComptabiliteDaoImplIT {
     @Test
     public void getListCompteComptableTest(){
         List<CompteComptable> listeCompteComptableTest =  dao.getListCompteComptable();
-        assertNotEquals(listeCompteComptableTest.size(),0);
+        assertNotEquals(0,listeCompteComptableTest.size());
     };
 
     @Test
     public void getListJournalComptableTest(){
         List<JournalComptable> listeJournalComptableTest =  dao.getListJournalComptable();
-        assertNotEquals(listeJournalComptableTest.size(),0);
+        assertNotEquals(0,listeJournalComptableTest.size());
 
     };
 
     @Test
     public void getListEcritureComptableTest() {
         List<EcritureComptable> listeEcritureComptableTest =  dao.getListEcritureComptable();
-        assertNotEquals(listeEcritureComptableTest.size(),0);
+        assertNotEquals(0,listeEcritureComptableTest.size());
     }
 
     @Test

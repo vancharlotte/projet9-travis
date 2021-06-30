@@ -62,7 +62,6 @@
         <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
         <sonar.organization>vancharlotte</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    <!-- <sonar.login>d822f9f5c03372f73356aef9cc9207a02519278b</sonar.login> -->
      <sonarcloud.token>bdb4db287dda7ddd4330146e3b61a32b1156be8b</sonarcloud.token>
 
 
