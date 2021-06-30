@@ -2,7 +2,6 @@ package com.dummy.myerp.consumer.dao.impl;
 
 import com.dummy.myerp.consumer.dao.contrat.ComptabiliteDao;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
-import org.springframework.stereotype.Repository;
 
 
 /**

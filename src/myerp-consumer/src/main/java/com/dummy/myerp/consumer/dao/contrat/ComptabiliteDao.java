@@ -90,7 +90,7 @@ public interface ComptabiliteDao {
      * @param year l'année des séquences écritures comptables à retourner
      * @param journal_code code du journal de l'écriture comptable
      */
-    SequenceEcritureComptable getSequenceEcritureComptableByCodeAndYear(String journal_code, int year);
+    SequenceEcritureComptable getSequenceEcritureComptableByCodeAndYear(String journalCode, int year);
 
     /**
      * Met à jour une séquence écriture comptable {@code sequenceEcritureComptable}.

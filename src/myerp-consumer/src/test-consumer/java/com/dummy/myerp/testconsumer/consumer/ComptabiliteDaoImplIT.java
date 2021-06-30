@@ -147,7 +147,7 @@ public class ComptabiliteDaoImplIT {
 
         newSEC.setDerniereValeur(123);
         dao.updateSequenceEcritureComptable(newSEC);
-        assertEquals(newSEC.getDerniereValeur(),123);
+        assertEquals(123, newSEC.getDerniereValeur());
 
         newSEC.setDerniereValeur(oldValue);
         dao.updateSequenceEcritureComptable(newSEC);

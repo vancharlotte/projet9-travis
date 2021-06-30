@@ -139,7 +139,7 @@ public class EcritureComptable {
      */
     public boolean isEquilibree() {
         boolean vRetour = this.getTotalDebit().compareTo(getTotalCredit()) == 0;
-        /* boolean vRetour = this.getTotalDebit().equals(getTotalCredit());
+        /** boolean vRetour = this.getTotalDebit().equals(getTotalCredit());
         ERROR .equals devient compareTo + ==0 car on compare des BigDecimal*/
         return vRetour;
     }

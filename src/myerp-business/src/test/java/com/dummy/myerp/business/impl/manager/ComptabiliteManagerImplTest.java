@@ -120,7 +120,7 @@ public class ComptabiliteManagerImplTest {
 
     //expected throw "L'écriture comptable n'est pas équilibrée."
     @Test
-    public void checkEcritureComptableUnitRG2() {
+    public void checkEcritureComptableUnitRG2Test_False() {
         vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                 null, new BigDecimal(123),
                 null));
@@ -129,6 +129,7 @@ public class ComptabiliteManagerImplTest {
                 new BigDecimal(1234)));
         assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEC));
     }
+
 
     //expected throw "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."
     @Test
