@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,20 +30,20 @@ public class ComptabiliteDaoImplIT {
     @Test
     public void getListCompteComptableTest(){
         List<CompteComptable> listeCompteComptableTest =  dao.getListCompteComptable();
-        assertNotNull(listeCompteComptableTest.size());
+        assertNotEquals(listeCompteComptableTest.size(),0);
     };
 
     @Test
     public void getListJournalComptableTest(){
         List<JournalComptable> listeJournalComptableTest =  dao.getListJournalComptable();
-        assertNotNull(listeJournalComptableTest.size());
+        assertNotEquals(listeJournalComptableTest.size(),0);
 
     };
 
     @Test
     public void getListEcritureComptableTest() {
         List<EcritureComptable> listeEcritureComptableTest =  dao.getListEcritureComptable();
-        assertNotNull(listeEcritureComptableTest.size());
+        assertNotEquals(listeEcritureComptableTest.size(),0);
     }
 
     @Test
