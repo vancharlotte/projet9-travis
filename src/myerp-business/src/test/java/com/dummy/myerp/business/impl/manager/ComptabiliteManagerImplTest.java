@@ -73,12 +73,34 @@ public class ComptabiliteManagerImplTest {
     //expect no exception
     @Test
     public void checkEcritureComptableTest() {
+        vEC = new EcritureComptable();
+        vEC.setJournal(new JournalComptable("AA", "Achat"));
+        vEC.setReference("AA-"+ Calendar.getInstance().get(Calendar.YEAR) +"/00001");
+        vEC.setId(-1);
+        vEC.setDate(new Date());
+        vEC.setLibelle("Libelle");
+        vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123),
+                null));
+        vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, null, new BigDecimal(123)));
         assertDoesNotThrow(() -> manager.checkEcritureComptable(vEC));
 
     }
     //expect no exception
     @Test
     public void checkEcritureComptableUnitTest() {
+        vEC = new EcritureComptable();
+        vEC.setJournal(new JournalComptable("AA", "Achat"));
+        vEC.setReference("AA-"+ Calendar.getInstance().get(Calendar.YEAR) +"/00001");
+        vEC.setId(-1);
+        vEC.setDate(new Date());
+        vEC.setLibelle("Libelle");
+        vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, new BigDecimal(123),
+                null));
+        vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
+                null, null, new BigDecimal(123)));
         assertDoesNotThrow(() -> manager.checkEcritureComptableUnit(vEC));
 
     }
