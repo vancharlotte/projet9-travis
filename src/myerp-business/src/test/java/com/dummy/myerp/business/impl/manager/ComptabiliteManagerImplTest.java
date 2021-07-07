@@ -70,21 +70,15 @@ public class ComptabiliteManagerImplTest {
         when(daoProxyMock.getComptabiliteDao().getEcritureComptableByRef("AA-"+ Calendar.getInstance().get(Calendar.YEAR) +"/00001")).thenReturn(vEC);
 
     }
-
     //expect no exception
     @Test
-    public void checkEcritureComptableUnit() {
-        vEC = new EcritureComptable();
-        vEC.setJournal(new JournalComptable("AA", "Achat"));
-        vEC.setReference("AA-"+ Calendar.getInstance().get(Calendar.YEAR) +"/00001");
-        vEC.setId(-1);
-        vEC.setDate(new Date());
-        vEC.setLibelle("Libelle");
-        vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, new BigDecimal(123),
-                null));
-        vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
-                null, null, new BigDecimal(123)));
+    public void checkEcritureComptableTest() {
+        assertDoesNotThrow(() -> manager.checkEcritureComptable(vEC));
+
+    }
+    //expect no exception
+    @Test
+    public void checkEcritureComptableUnitTest() {
         assertDoesNotThrow(() -> manager.checkEcritureComptableUnit(vEC));
 
     }
@@ -118,7 +112,7 @@ public class ComptabiliteManagerImplTest {
         Assertions.assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(new EcritureComptable()));
     }
 
-    //expected throw "L'écriture comptable n'est pas équilibrée."
+    //expected throw "L'écriture comptable n'est pas équilibrée. "
     @Test
     public void checkEcritureComptableUnitRG2Test_False() {
         vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
@@ -133,7 +127,7 @@ public class ComptabiliteManagerImplTest {
 
     //expected throw "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit."
     @Test
-    public void checkEcritureComptableUnitRG3() {
+    public void checkEcritureComptableUnitRG3Test_False() {
         vEC.getListLigneEcriture().add(new LigneEcritureComptable(new CompteComptable(1),
                 null, new BigDecimal(123),
                 null));
@@ -145,7 +139,7 @@ public class ComptabiliteManagerImplTest {
 
     //expected throw "La date de la référence ne correspond pas à l'année d'écriture."
     @Test
-    public void checkEcritureComptableUnitRG5_Date() {
+    public void checkEcritureComptableUnitRG5_TestDate() {
         vEC.setReference("AA-2012/00001");
 
         assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEC));
@@ -155,10 +149,12 @@ public class ComptabiliteManagerImplTest {
 
     //expected throw "Le code journal de la référence est différent du code journal."
     @Test
-    public void checkEcritureComptableUnitRG5_CodeJournal(){
+    public void checkEcritureComptableUnitRG5_TestCodeJournal(){
         vEC.setJournal(new JournalComptable("ZZ", "Test"));
 
         assertThrows(FunctionalException.class, () -> manager.checkEcritureComptableUnit(vEC));
+        vEC.setJournal(new JournalComptable("AA", "Achat"));
+
     }
 
     //expected throw " RG_Compta_6 : La référence d'une écriture comptable doit être unique."
