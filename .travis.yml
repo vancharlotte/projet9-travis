@@ -18,10 +18,6 @@ jobs:
         - mvn compile -f src
 
     - stage: test
-      name: "test-business"
       script:
-        - mvn verify -f src sonar:sonar -P test-business -Dsonar.login=d822f9f5c03372f73356aef9cc9207a02519278b
-    - stage: test
-      name: "test-consumer"
-      script:
+        - mvn verify -f src sonar:sonar -P test-business -Dsonar.login=d822f9f5c03372f73356aef9cc9207a02519278
         - mvn verify -f src sonar:sonar -P test-consumer -Dsonar.login=d822f9f5c03372f73356aef9cc9207a02519278b

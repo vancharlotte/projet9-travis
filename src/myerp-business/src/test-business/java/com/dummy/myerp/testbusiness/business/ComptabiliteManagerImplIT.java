@@ -30,20 +30,20 @@ public class ComptabiliteManagerImplIT  {
     @Test
     public void getListCompteComptableTest(){
         List<CompteComptable> listeCompteComptableTest =  manager.getListCompteComptable();
-        assertNotNull(listeCompteComptableTest.size());
+        assertNotEquals(0,listeCompteComptableTest.size());
     }
 
 
     @Test
     public void getListJournalComptableTest(){
         List<JournalComptable> listeJournalComptableTest =  manager.getListJournalComptable();
-        assertNotNull(listeJournalComptableTest.size());
+        assertNotEquals(0,listeJournalComptableTest.size());
     }
 
     @Test
     public void getListEcritureComptableTest(){
         List<EcritureComptable> listeEcritureComptableTest =  manager.getListEcritureComptable();
-        assertNotNull(listeEcritureComptableTest.size());
+        assertNotEquals(0,listeEcritureComptableTest.size());
     }
 
 
