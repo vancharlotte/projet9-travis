@@ -174,7 +174,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 
         // DO ===== RG_Compta_5 : Format et contenu de la référence
         // vérifier que l'année dans la référence correspond bien à la date de l'écriture, idem pour le code journal...
-
         checkRG55(pEcritureComptable);
 
     }
