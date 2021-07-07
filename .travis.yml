@@ -19,5 +19,5 @@ jobs:
 
     - stage: test
       script:
-        - mvn verify -f src sonar:sonar -P test-business -Dsonar.login=d822f9f5c03372f73356aef9cc9207a02519278
+        - mvn verify -f src sonar:sonar -P test-business -Dsonar.login=d822f9f5c03372f73356aef9cc9207a02519278b
         - mvn verify -f src sonar:sonar -P test-consumer -Dsonar.login=d822f9f5c03372f73356aef9cc9207a02519278b
